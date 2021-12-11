@@ -43,7 +43,7 @@ export async function getUserByIdHandler(
     const userId = req.params.userId;
 
     try {
-        const user = await userService.findUser({_id: userId}, "friends");
+        const user = await userService.findUser({_id: userId}, "friends thoughts");
         return res.json(user);
         
     } catch (error: any) {
