@@ -30,12 +30,12 @@ export async function validatePassword({
     return omit(user.toObject(), "password");
 }
 
-export async function findUser(query: FilterQuery<UserDocument>){
-    return UserModel.findOne(query).lean();
+export async function findUser(query: FilterQuery<UserDocument>, populatePath: string = ""){
+    return UserModel.findOne(query).populate(populatePath).lean();
 }
 
-export async function findUsers(query: FilterQuery<UserDocument>){
-    return UserModel.find(query).lean();
+export async function findUsers(query: FilterQuery<UserDocument>, populatePath: string = ""){
+    return UserModel.find(query).populate(populatePath).lean();
 }
 
 export async function updateUser( 
