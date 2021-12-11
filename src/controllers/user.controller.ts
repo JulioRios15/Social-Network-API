@@ -1,6 +1,12 @@
 import { Request, Response } from "express";
 import logger from "../utils/logger";
-import {CreateUserInput, DeleteUserInput, ReadUserInput, UpdateUserInput} from '../schema/user.schema'
+import {
+    CreateUserInput, 
+    DeleteUserInput, 
+    ReadUserInput, 
+    UpdateUserInput, 
+    UserFriendInput
+} from '../schema/user.schema'
 import * as userService from '../services/user.service';
 
 export async function createUserHandler(
@@ -37,7 +43,7 @@ export async function getUserByIdHandler(
     const userId = req.params.userId;
 
     try {
-        const user = await userService.findUser({_id: userId});
+        const user = await userService.findUser({_id: userId}, "friends");
         return res.json(user);
         
     } catch (error: any) {
@@ -80,3 +86,45 @@ export async function deleteUserByIdHandler(
         return res.json(deletedUser);
         
 }
+
+export async function addUserFriendHandler(
+    req: Request<UserFriendInput["params"]>,
+    res: Response
+){
+    const {userId, friendId} = req.params;
+
+    const user = await userService.findUser({_id: userId}).catch((e) => false);
+    const friend = await userService.findUser({_id: friendId}).catch((e) => false);
+
+    if(!user || !friend){
+        return res.sendStatus(404);
+    }
+
+    await userService.updateUser({_id: userId},{
+        $addToSet: {friends: friendId}
+    });   
+
+    return res.json(friend);
+}
+
+export async function deleteUserFriendHandler(
+    req: Request<UserFriendInput["params"]>,
+    res: Response
+){
+    const {userId, friendId} = req.params;
+
+    const user = await userService.findUser({_id: userId}).catch((e) => false);
+    const friend = await userService.findUser({_id: friendId}).catch((e) => false);
+
+    if(!user || !friend){
+        return res.sendStatus(404);
+    }
+
+    const removedFriend = await userService.updateUser(
+        {_id: userId},
+        {$pull: {friends: friendId}}
+        );   
+
+    return res.json(removedFriend);
+}
+
