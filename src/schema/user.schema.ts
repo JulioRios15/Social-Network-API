@@ -34,6 +34,17 @@ const payload = {
     })
   });
 
+  export const userFriendSchema = object({
+    params: object({
+      userId: string({
+        required_error: "userId is required"
+      }),
+      friendId: string({
+        required_error: "friendId is required"
+      })
+    })
+  })
+
   export const updateUserSchema = object({
     ...params,
     ...payload
@@ -51,5 +62,7 @@ const payload = {
   export type ReadUserInput = TypeOf<typeof getUserSchema>;
   export type UpdateUserInput = TypeOf<typeof updateUserSchema>;
   export type DeleteUserInput = TypeOf<typeof deleteUserSchema>;
+
+  export type UserFriendInput = TypeOf<typeof userFriendSchema>;
 
 
