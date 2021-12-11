@@ -5,7 +5,8 @@
   "main": "./src/app.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "watch": "ts-node-dev --respawn --transpile-only src/app.ts"
+    "watch": "ts-node-dev --respawn --transpile-only src/app.ts",
+    "seeds": "ts-node ./src/seeds/index.ts"
   },
   "repository": {
     "type": "git",
@@ -28,6 +29,7 @@
     "mongoose": "^6.1.1",
     "pino": "^7.5.1",
     "pino-pretty": "^7.2.0",
+    "unique-names-generator": "^4.6.0",
     "zod": "^3.11.6"
   },
   "devDependencies": {
