@@ -1,4 +1,4 @@
-import { FilterQuery, UpdateQuery } from "mongoose";
+import { FilterQuery, UpdateQuery, QueryOptions } from "mongoose";
 import { omit } from "lodash";
 import UserModel, { UserDocument, UserInput } from "../models/user.model";
 
@@ -40,9 +40,10 @@ export async function findUsers(query: FilterQuery<UserDocument>, populatePath: 
 
 export async function updateUser( 
     query: FilterQuery<UserDocument>,
-    update: UpdateQuery<UserDocument>
+    update: UpdateQuery<UserDocument>,
+    options: QueryOptions = {}
 ) {
-    return UserModel.updateOne(query, update);
+    return UserModel.updateOne(query, update, options);
 }
 
 export async function deleteUser(query: FilterQuery<UserDocument>){
