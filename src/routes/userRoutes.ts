@@ -1,7 +1,13 @@
 import express, { Request, Response } from 'express';
 import * as userController from '../controllers/user.controller';
 import validateResource from "../middlewares/validateResource";
-import {createUserSchema, updateUserSchema, getUserSchema, deleteUserSchema} from '../schema/user.schema';
+import {
+    createUserSchema, 
+    updateUserSchema, 
+    getUserSchema, 
+    deleteUserSchema,
+    userFriendSchema
+} from '../schema/user.schema';
 
 const router = express.Router();
 
@@ -37,9 +43,17 @@ router.delete(
     );
 
 //Add new friend to user
-router.post("/:userId/friends/:friendId", (req: Request, res: Response) => {});
+router.post(
+    "/:userId/friends/:friendId",
+    validateResource(userFriendSchema),
+    userController.addUserFriendHandler,
+    );
 
 //Remove user friend
-router.delete("/:userId/friends/:friendId", (req: Request, res: Response) => {});
+router.delete(
+    "/:userId/friends/:friendId", 
+    validateResource(userFriendSchema),
+    userController.deleteUserFriendHandler
+    );
 
 export = router;
