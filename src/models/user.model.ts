@@ -34,7 +34,7 @@ const userSchema = new Schema(
             required: true,
         },
         thoughts: [
-            {type: mongoose.Schema.Types.ObjectId, ref: "thought", }
+            {type: mongoose.Schema.Types.ObjectId, ref: "Thought", }
         ],
         friends: [
             {type: mongoose.Schema.Types.ObjectId, ref: "User", }
