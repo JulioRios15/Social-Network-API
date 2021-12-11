@@ -1,13 +1,13 @@
-import express, { Request, Response } from 'express';
+import express from 'express';
 import * as userController from '../controllers/user.controller';
 import validateResource from "../middlewares/validateResource";
 import {
     createUserSchema, 
     updateUserSchema, 
     getUserSchema, 
-    deleteUserSchema,
-    userFriendSchema
+    deleteUserSchema
 } from '../schema/user.schema';
+import {friendSchema} from '../schema/friend.schema'
 
 const router = express.Router();
 
@@ -45,14 +45,14 @@ router.delete(
 //Add new friend to user
 router.post(
     "/:userId/friends/:friendId",
-    validateResource(userFriendSchema),
+    validateResource(friendSchema),
     userController.addUserFriendHandler,
     );
 
 //Remove user friend
 router.delete(
     "/:userId/friends/:friendId", 
-    validateResource(userFriendSchema),
+    validateResource(friendSchema),
     userController.deleteUserFriendHandler
     );
 
