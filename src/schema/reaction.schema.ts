@@ -12,7 +12,10 @@ const params = object({
 const body = object({
     reactionBody: string({
         required_error: "reaction body is required"
-    })
+    }),
+    username: string({
+        required_error: "reaction body is required"
+    }),    
 });
 
 export const createReactionSchema = object({
@@ -21,7 +24,7 @@ export const createReactionSchema = object({
 });
 
 export const deleteReactionSchema = object({
-    params: params.omit({thoughtId: true})
+    params: params
 });
 
 export type CreateReactionInput = TypeOf<typeof createReactionSchema>;
