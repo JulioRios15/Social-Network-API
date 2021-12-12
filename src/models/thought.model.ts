@@ -18,7 +18,7 @@ export interface ThoughtDocument extends UserInput, Document {
     updatedAt: Date;
 }
 
-const reactionSchema = new Schema<Reaction>(
+const reactionSchema = new Schema(
     {
         reactionId: {
             type: mongoose.Schema.Types.ObjectId,
@@ -35,11 +35,15 @@ const reactionSchema = new Schema<Reaction>(
         },
         createdAt: {
             type: Date,
+            default: Date.now()
         }
+    },
+    {
+        _id: false
     }
 );
 
-const toughtSchema = new Schema<ThoughtDocument>(
+const toughtSchema = new Schema(
     {
         thoughtText: {
             type: String,
@@ -51,7 +55,7 @@ const toughtSchema = new Schema<ThoughtDocument>(
             type: String,
             required: true
         },
-        reactions: [{type: reactionSchema}]
+        reactions: [reactionSchema]
     }, 
     {
         timestamps: true
