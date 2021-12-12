@@ -1,10 +1,10 @@
 import  mongoose, {Schema, Document, ObjectId}  from "mongoose";
 
 export interface Reaction{
-    reactionId: ObjectId;
+    reactionId?: ObjectId;
     reactionBody: string;
     username: string;
-    createdAt: Date;
+    createdAt?: Date;
 }
 
 export interface UserInput {
