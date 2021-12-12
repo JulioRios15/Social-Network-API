@@ -93,18 +93,11 @@ export async function addUserFriendHandler(
 ){
     const {userId, friendId} = req.params;
 
-    const user = await userService.findUser({_id: userId}).catch((e) => false);
-    const friend = await userService.findUser({_id: friendId}).catch((e) => false);
+    const updatedUser = await userService.addFriend(userId, friendId).catch((e) => false);
 
-    if(!user || !friend){
-        return res.sendStatus(404);
-    }
+    if(!updatedUser) return res.sendStatus(404);
 
-    await userService.updateUser({_id: userId},{
-        $addToSet: {friends: friendId}
-    });   
-
-    return res.json(friend);
+    return res.json(updatedUser);
 }
 
 export async function deleteUserFriendHandler(
@@ -113,18 +106,10 @@ export async function deleteUserFriendHandler(
 ){
     const {userId, friendId} = req.params;
 
-    const user = await userService.findUser({_id: userId}).catch((e) => false);
-    const friend = await userService.findUser({_id: friendId}).catch((e) => false);
+    const updatedUser = await userService.removeFriend(userId, friendId).catch((e) => false);
 
-    if(!user || !friend){
-        return res.sendStatus(404);
-    }
+    if(!updatedUser) return res.sendStatus(404);
 
-    const removedFriend = await userService.updateUser(
-        {_id: userId},
-        {$pull: {friends: friendId}}
-        );   
-
-    return res.json(removedFriend);
+    return res.json(updatedUser);
 }
 
