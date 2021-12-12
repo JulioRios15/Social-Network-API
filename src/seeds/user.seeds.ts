@@ -2,18 +2,19 @@ import {createUser, deleteAllUsers} from '../services/user.service';
 import {uniqueNamesGenerator, names, adjectives, colors, animals } from 'unique-names-generator'
 import logger from '../utils/logger';
 
-export async function seedUsers() {
-    const count = 15;
+export async function seedUsers(numOfUsers: number = 15) {
 
     await deleteAllUsers();
 
-    for (let i = 0; i < count + 1; i++) {
+    for (let i = 0; i < numOfUsers; i++) {
         const newUser = await createUser(generateUserData());
 
         if(!newUser){
             logger.warn(newUser, "Unable to seed users");
             process.exit(1);
         }
+
+        logger.info(newUser.toJSON(), "New User");
     }
 
     logger.info("Users Seeded");
