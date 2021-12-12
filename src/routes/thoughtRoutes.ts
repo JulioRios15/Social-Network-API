@@ -7,6 +7,7 @@ import {
     getThoughtSchema,
     updateThoughtSchema
 } from '../schema/thought.schema';
+import {createReactionSchema, deleteReactionSchema} from '../schema/reaction.schema'
 
 const router = express.Router();
 
@@ -32,17 +33,32 @@ router.get(
     thoughtController.getThoughtByIdHandler
 );
 
+//Update thought
 router.put(
     "/:thoughtId",
     validateResource(updateThoughtSchema),
     thoughtController.updateThoughtByIdHandler
 );
 
+//Delete thought
 router.delete(
     "/:thoughtId",
     validateResource(deleteThoughtSchema),
     thoughtController.deleteThoughtByIdHandler
 );
 
+//Create thought reaction
+router.post(
+    "/:thoughtId/reactions",
+    validateResource(createReactionSchema),
+    thoughtController.createReactionHandler
+);
+
+//Create thought reaction
+router.delete(
+    "/:thoughtId/reactions/:reactionId",
+    validateResource(deleteReactionSchema),
+    thoughtController.deleteReactionHandler
+);
 
 export = router;
