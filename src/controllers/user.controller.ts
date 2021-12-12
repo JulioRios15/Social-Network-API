@@ -4,9 +4,9 @@ import {
     CreateUserInput, 
     DeleteUserInput, 
     ReadUserInput, 
-    UpdateUserInput, 
-    UserFriendInput
+    UpdateUserInput
 } from '../schema/user.schema'
+import {FriendInput} from '../schema/friend.schema'
 import * as userService from '../services/user.service';
 
 export async function createUserHandler(
@@ -88,7 +88,7 @@ export async function deleteUserByIdHandler(
 }
 
 export async function addUserFriendHandler(
-    req: Request<UserFriendInput["params"]>,
+    req: Request<FriendInput["params"]>,
     res: Response
 ){
     const {userId, friendId} = req.params;
@@ -108,7 +108,7 @@ export async function addUserFriendHandler(
 }
 
 export async function deleteUserFriendHandler(
-    req: Request<UserFriendInput["params"]>,
+    req: Request<FriendInput["params"]>,
     res: Response
 ){
     const {userId, friendId} = req.params;
