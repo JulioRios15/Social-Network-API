@@ -34,5 +34,5 @@ export const deleteThoughtSchema = object({
 
 export type CreateThoughtInput = TypeOf<typeof createThoughtSchema>;
 export type ReadThoughtInput = TypeOf<typeof getThoughtSchema>;
-export type UpdateThoughtSchema = TypeOf<typeof updateThoughtSchema>;
-export type DeleteThoughtSchema = TypeOf<typeof deleteThoughtSchema>;
+export type UpdateThoughtInput = TypeOf<typeof updateThoughtSchema>;
+export type DeleteThoughtInput = TypeOf<typeof deleteThoughtSchema>;
