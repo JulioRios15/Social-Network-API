@@ -53,3 +53,19 @@ export async function deleteUser(query: FilterQuery<UserDocument>){
 export async function deleteAllUsers(){
     return await UserModel.deleteMany({});
 }
+
+export async function addFriend(userId: string, friendId: string){
+    return await UserModel.findOneAndUpdate(
+        { _id: userId },
+        {$addToSet: {friends: friendId} },
+        {new: true}
+    );
+}
+
+export async function removeFriend(userId: string, friendId: string){
+    return await UserModel.findOneAndUpdate(
+        { _id: userId },
+        {$pull: {friends: friendId} },
+        {new: true}
+    );
+}
