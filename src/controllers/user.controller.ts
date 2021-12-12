@@ -8,6 +8,7 @@ import {
 } from '../schema/user.schema'
 import {FriendInput} from '../schema/friend.schema'
 import * as userService from '../services/user.service';
+import {deleteUserThoughts} from '../services/thought.service';
 
 export async function createUserHandler(
     req: Request<{}, {}, CreateUserInput["body"]>,
@@ -27,7 +28,7 @@ export async function createUserHandler(
 
 export async function getUserAllUsersHandler(req: Request, res: Response) {
     try {
-        const users = await userService.findUsers({}, "friends");
+        const users = await userService.findUsers({});
         return res.json(users);
         
     } catch (error: any) {
@@ -83,6 +84,8 @@ export async function deleteUserByIdHandler(
         }
 
         const deletedUser = await userService.deleteUser({_id: userId});
+        await deleteUserThoughts(user.username);
+        
         return res.json(deletedUser);
         
 }
