@@ -45,3 +45,33 @@ export async function deleteAllThoughts(){
 export async function deleteUserThoughts(username: string){
     return await ThoughtModel.deleteMany({username});
 }
+
+export async function addReaction(thoughtId: string, reaction: Object){
+    try {
+        const thought = await ThoughtModel.findOne({_id: thoughtId});
+
+        const update = await ThoughtModel.updateOne({ _id: thoughtId }, { $push: { reactions: reaction } }, { new: true });
+
+        return update;
+        
+    } catch (error:any) {
+        throw new Error(error);
+    }
+}
+
+export async function deleteReaction(thoughtId:string, reactionId: string) {
+    try {
+        const thought = await ThoughtModel.findOne({_id: thoughtId});
+
+        const update = await ThoughtModel.updateOne(
+            { _id: thoughtId }, 
+            { $pull: { reactions: {reactionId: reactionId} } }, 
+            { new: true }
+        );
+
+        return update;
+        
+    } catch (error:any) {
+        throw new Error(error);
+    }
+}
