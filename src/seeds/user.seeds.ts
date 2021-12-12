@@ -1,5 +1,5 @@
 import {createUser, deleteAllUsers} from '../services/user.service';
-import {uniqueNamesGenerator, names, adjectives, colors, animals } from 'unique-names-generator'
+import faker from 'faker';
 import logger from '../utils/logger';
 
 export async function seedUsers(numOfUsers: number = 15) {
@@ -21,22 +21,14 @@ export async function seedUsers(numOfUsers: number = 15) {
 }
 
 function generateUserData(){
-    const firstName = generateName();
-    const lastName = generateName();
-    const email = `${firstName}.${lastName}@gmail.com`;
-    const username = `${firstName}_The_${generateUsername()}`;
+
+    const userInfo: Faker.Card = faker.helpers.createCard();
+    const email = userInfo.email;
+    const username = userInfo.username;
 
     return {
         email,
         username,
         password: "123456789"
     }
-}
-
-function generateName(): string{
-    return uniqueNamesGenerator({dictionaries: [names]});
-}
-
-function generateUsername(): string {
-    return uniqueNamesGenerator({dictionaries: [colors, adjectives, animals]})
 }
