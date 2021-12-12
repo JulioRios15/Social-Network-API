@@ -24,6 +24,7 @@ const body = object({
   });
 
   export const updateUserSchema = object({
+    params: params,
     body: body.omit({password: true})
   });
 
