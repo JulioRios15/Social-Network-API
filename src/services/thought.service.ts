@@ -1,6 +1,6 @@
 import { FilterQuery, UpdateQuery, QueryOptions } from "mongoose";
 import {updateUser} from './user.service';
-import ThoughtModel, { ThoughtDocument, UserInput } from "../models/thought.model";
+import ThoughtModel, { ThoughtDocument, UserInput, Reaction } from "../models/thought.model";
 
 export async function createThought(input: UserInput){
     try {       
@@ -46,7 +46,7 @@ export async function deleteUserThoughts(username: string){
     return await ThoughtModel.deleteMany({username});
 }
 
-export async function addReaction(thoughtId: string, reaction: Object){
+export async function addReaction(thoughtId: string, reaction: Reaction){
     try {
         const thought = await ThoughtModel.findOne({_id: thoughtId});
 
