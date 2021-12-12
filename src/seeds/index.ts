@@ -1,5 +1,7 @@
 import { connectToMongo } from "../database/connection";
 import {seedUsers} from './user.seeds';
+import {seedthoughts} from './thought.seeds';
+import {seedReactions} from './reaction.seeds';
 
 function endConnection(){
     return process.exit(0);
@@ -8,9 +10,12 @@ function endConnection(){
 async function initializeSeeds() {
     await connectToMongo();
 
-    await seedUsers();
+    await seedUsers(20);
 
-    endConnection();
+    await seedthoughts(50);
+
+    await seedReactions(200);
+
 }
 
-initializeSeeds();
+initializeSeeds().then(() => endConnection())
