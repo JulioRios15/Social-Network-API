@@ -6,6 +6,7 @@ import {
     UpdateThoughtInput,
     DeleteThoughtInput
 } from '../schema/thought.schema';
+import {CreateReactionInput, DeleteReactionInput} from '../schema/reaction.schema';
 import * as thoughtService from '../services/thought.service';
 
 export async function createThoughtHandler(
@@ -98,3 +99,33 @@ export async function deleteThoughtByIdHandler(
         return res.status(409).json(error.message);
     }
 }
+
+export async function createReactionHandler(
+    req: Request<CreateReactionInput["params"], {}, CreateReactionInput["body"]>,
+    res: Response
+){
+    const thoughtId = req.params.thoughtId;
+
+    const updatedThought = await thoughtService.addReaction(thoughtId, req.body);
+
+    logger.info(updatedThought, "Updated thought response");
+
+    if(!updatedThought) return res.sendStatus(409);
+
+    return res.json(updatedThought);
+}
+
+export async function deleteReactionHandler(
+    req: Request<DeleteReactionInput["params"]>,
+    res: Response
+){
+    const {thoughtId, reactionId} = req.params;
+
+    const removedReaction = await thoughtService.deleteReaction(thoughtId, reactionId);
+
+    if(!removedReaction) return res.sendStatus(409);
+
+    return res.json(removedReaction);
+}
+
+
