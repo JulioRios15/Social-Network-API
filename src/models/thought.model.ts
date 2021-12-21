@@ -58,7 +58,13 @@ const toughtSchema = new Schema(
         reactions: [reactionSchema]
     }, 
     {
-        timestamps: true
+        timestamps: true,
+        toJSON: {
+            virtuals: true,
+        },
+        toObject: {
+            virtuals: true
+        }
     }
 );
 
